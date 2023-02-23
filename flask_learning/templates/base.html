@@ -30,9 +30,9 @@
                     Dropdown
                 </a>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="{{ url_for('add_human') }}">Add Human</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('delete_human') }}">Delete Human</a></li>
-                    <li><a class="dropdown-item" href="{{ url_for('list_human') }}">List Human</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('person.add_person') }}">Add Human</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('person.delete_person') }}">Delete Human</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('person.list_person') }}">List Human</a></li>
                     <li><hr class="dropdown-divider"></li>
                     <li><a class="dropdown-item" href="{{ url_for('info') }}">Adiyogi</a></li>
                 </ul>
