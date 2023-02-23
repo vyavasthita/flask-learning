@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> This is Info page.</h1>
+<a href="{{ url_for('signup')}}">Sign Up Here</a>
+<br>
+<a href="{{ url_for('static', filename='adiyogi.jpg') }}">Adiyogi</a>
+{% endblock %}
+<br>

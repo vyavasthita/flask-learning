@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% for message in get_flashed_messages() %}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <!-- <strong>Holy guacamole!</strong> You should check in on some of those fields below. -->
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {{ message }}
+    </div>
+{% endfor %}
+
+<form action="{{ url_for('thankyou') }}" class="form" method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.breed.label }} {{ form.breed }}
+    <br>
+
+    {{ form.oota.label }} {{ form.oota }}
+    <br>
+
+
+    {{ form.mood.label }} {{ form.mood }}
+    <br>
+
+    {{ form.food_choice.label }} {{ form.food_choice }}
+    <br>
+
+    Any Other feedback
+    {{ form.feedback }}
+    <br>
+
+    {{ form.submit() }}
+</form>
+{% endblock %}
+

@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Please sign up below.</h1>
+<br>
+
+<form action="{{ url_for('thankyou') }}" method="post"></form>
+    <label for="emailid">Email ID:</label>
+    <input type="email" name="email" placeholder="Your email address" id="emailid">
+    <br>
+
+    <label for="passwordtag">Password:</label>
+    <input type="password" name="password" placeholder="your password" id="passwordtag">
+    <br>
+
+    <input type="submit" value="Sign Up">
+    <br>
+{% endblock %}
