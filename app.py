@@ -6,6 +6,9 @@ from wtforms.fields import (StringField, SubmitField,
         RadioField, SelectField,
         TextAreaField)
 from wtforms.validators import DataRequired
+from flask_login import login_required, login_user, logout_user
+from flask_learning.forms import LoginForm, RegistrationForm
+from flask_learning.models import User
 
 
 class Human(db.Model):
@@ -43,6 +46,54 @@ def home():
         return redirect(url_for('thankyou'))
 
     return render_template('home.html', form=form)
+
+@app.route('/welcome')
+@login_required
+def welcome():
+    return render_template('welcome.html')
+
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('You have been logged out')
+    return redirect(url_for('home'))
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+
+        if user is not None and user.check_password(form.password.data):
+            login_user(user)
+            flash('Logged in successfully')
+
+            next = request.args.get('next')
+
+            if next == None or not next[0] == '/':
+                next = url_for('welcome')
+
+            return redirect(next)
+
+    return render_template('login.html', form=form)
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegistrationForm()
+    
+    if form.validate_on_submit():
+        user = User(email=form.email.data,
+                    username=form.username.data,
+                    password=form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Thanks for registration')
+
+        return redirect(url_for('login'))
+
+    return render_template('register.html', form=form)
 
 @app.route('/milk')
 def milk():

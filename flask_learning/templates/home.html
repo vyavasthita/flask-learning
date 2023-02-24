@@ -2,6 +2,18 @@
 
 {% block content %}
 
+<div class="jumbotron">
+    {% if current_user.is_authenticated %}
+        <p>
+            Namaste {{ current_user.username }}
+        </p>
+    {% else %}
+    <p>
+        Please login or regiser
+    </p>
+    {% endif %}
+</div>
+
 {% for message in get_flashed_messages() %}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
         <!-- <strong>Holy guacamole!</strong> You should check in on some of those fields below. -->

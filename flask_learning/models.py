@@ -1,6 +1,27 @@
-from flask_learning import db
+from flask_learning import db, login_manager
+from flask_bcrypt import generate_password_hash, check_password_hash
+from flask_login import UserMixin
 
 
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(user_id)
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'user'
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(40), unique=True, index=True)
+    username = db.Column(db.String(40), unique=True, index=True)
+    password = db.Column(db.String(128))
+
+    def __init__(self, email, username, password) -> None:
+        super().__init__()
+        self.email = email
+        self.username = username
+        self.password = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password, password)
 
 class Person(db.Model):
     __tablename__ = 'person'
